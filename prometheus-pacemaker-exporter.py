@@ -110,6 +110,9 @@ class PacemakerCollector(object):
             elif node.tag == 'clone':
                 for i, resource in enumerate(node.findall('resource')):
                     resource_elements.append((p_bool(node.attrib['unique']), str(i),  resource))
+            elif node.tag == 'group':
+                for i, resource in enumerate(node.findall('resource')):
+                    resource_elements.append((True, str(i),  resource))
 
         resource_metrics = {
             'active':   (p_bool,    RGauge('resource_active',   'Resource is active')),

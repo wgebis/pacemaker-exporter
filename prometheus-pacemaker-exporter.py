@@ -48,7 +48,8 @@ class PacemakerCollector(object):
                                 value=p_time(summary.find('last_change').attrib['time']))
         yield GaugeMetricFamily('pacemaker_dc_present', 'Whether the cluster has an active DC',
                                 value=p_bool(summary.find('current_dc').attrib['present']))
-        yield GaugeMetricFamily('pacemaker_dc_with_quorum', 'Whether the cluster has quorum',
+        if summary.find('current_dc').attrib['present'] == 'true':
+          yield GaugeMetricFamily('pacemaker_dc_with_quorum', 'Whether the cluster has quorum',
                                 value=p_bool(summary.find('current_dc').attrib['with_quorum']))
         yield GaugeMetricFamily('pacemaker_nodes_configured', 'Number of configured nodes',
                                 value=int(summary.find('nodes_configured').attrib['number']))
